@@ -30,7 +30,7 @@ class Description
         if (!$config) {
             return false;
         }
-        
+
         if (is_string($config)) {
             $config = include $config;
         }
@@ -186,7 +186,7 @@ class Description
 
         $URL = parse_url($variable[0]);
         $pathinfo = pathinfo($URL['path']);
-        $extension = $pathinfo['extension'] ?? '';
+        $extension = _isset($pathinfo, 'extension', '');
         $ext = strtolower($extension);
 
         if (!isset($variable['type']) || $variable['type']) {

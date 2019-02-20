@@ -108,7 +108,7 @@ class Suggestions
     	foreach ($this->columns as $key => $value) {
     		$field = is_numeric($key) ? $value : $key;
     		$val = $value ? : $field;
-    		$arr[$field] = $row[$val] ?? '';
+    		$arr[$field] = _isset($row, $val, '');
     	}
     	return $arr;
     }
