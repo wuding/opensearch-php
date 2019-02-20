@@ -22,6 +22,7 @@ class Suggestions
     public function __construct($data = null, $query_string = null, $query_url = null)
     {
         $this->init($data, $query_string, $query_url);
+        # func('\OpenSearch\_isset', '\_isset', [], '', null);
     }
 
     public function init($data = null, $query_string = null, $query_url = null)
@@ -53,7 +54,7 @@ class Suggestions
 
     	if (!$this->query_url && $this->configFile) {
     		$config = include $this->configFile;
-    		$this->query_url = $search_url;
+    		$this->query_url = get_config_var('query_url');
     	}
     	return $this->query_url;
     }
@@ -109,6 +110,7 @@ class Suggestions
     		$field = is_numeric($key) ? $value : $key;
     		$val = $value ? : $field;
     		$arr[$field] = _isset($row, $val, '');
+            
     	}
     	return $arr;
     }
