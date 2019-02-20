@@ -7,11 +7,29 @@
 
 
 ## Install
-
+### 自动安装
 ```bash
 composer require wuding/opensearch
 ```
 
+
+
+### 手动安装
+- 你的项目 composer.json 添加自动加载规则：
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "OpenSearch\\": "vendor/wuding/opensearch-php/src/"
+        }
+    }
+}
+```
+- 下载 [Zip 包](https://github.com/wuding/opensearch-php/archive/master.zip)并解压到 vendor 目录下
+- 你的项目下运行命令：
+```sh
+composer dump-autoload
+```
 
 
 ## Usage
