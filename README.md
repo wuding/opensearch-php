@@ -4,6 +4,8 @@
 
 依赖库 https://packagist.org/packages/wuding/opensearch
 
+文档 http://www.opensearch.org/ | [English](https://github.com/dewitt/opensearch) | [中文](https://github.com/static-site/tutorial.pub/tree/master/category/Web_search_engine/OpenSearch)
+
 
 
 ## Install
