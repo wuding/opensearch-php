@@ -1,6 +1,8 @@
 # OpenSearch PHP
 
-https://github.com/wuding/opensearch-php
+版本库 https://github.com/wuding/opensearch-php
+
+依赖库 https://packagist.org/packages/wuding/opensearch
 
 
 
