@@ -3,12 +3,12 @@ namespace OpenSearch;
 
 class Suggestions
 {
-    public $raw = null;
-    public $data = null;
-    public $lists = null;
+    public $configFile = null;
+    public $raw = null;    
     public $query_string = null;
     public $query_url = null;
     public $query_url_template = null;
+
     public $urls = [];
     public $columns = [
     	'complection' => '',
@@ -16,71 +16,33 @@ class Suggestions
     	'query_url' => 'url',
     	'results' => 'total',
     ];
-    public $json = null;
-    public $configFile = null;
+    public $data = null;
+    public $lists = null;    
+    public $json = null;    
 
-    public function __construct($data = null, $query_string = null, $query_url = null)
+    public function __construct($raw_data = null, $query_string = null, $query_url = null)
     {
-        $this->init($data, $query_string, $query_url);
-        # func('\OpenSearch\_isset', '\_isset', [], '', null);
+        $this->init($raw_data, $query_string, $query_url);
     }
 
-    public function init($data = null, $query_string = null, $query_url = null)
+    public function init($raw_data = null, $query_string = null, $query_url = null)
     {
-        $this->raw = $data;
+        $this->raw = $raw_data;
         $this->query_string = $query_string;
         $this->query_url = $query_url;
     }
 
     public function configFile($path = null)
     {
-    	if (null === $path) {
-    		return $this->configFile;
-    	} else {
+    	if (null !== $path) {
     		$this->configFile = $path;
     	}
-    	
-		
-    }
-
-    public function queryUrl($url = null)
-    {
-    	if (null === $url) {
-    		return $this->query_url;
-    	} elseif ($url) {
-    		$this->query_url = $url;
-    	}
-    	
-
-    	if (!$this->query_url && $this->configFile) {
-    		$config = include $this->configFile;
-    		$this->query_url = get_config_var('query_url');
-    	}
-    	return $this->query_url;
-    }
-
-	public function queryUrlTemplate($url = null, $encode = null)
-    {
-    	if (null === $url) {
-    		return $this->query_url_template;
-    	} elseif ($url) {
-    		$hash = md5($url);
-    		if (isset($this->urls[$hash])) {
-    			return $this->query_url_template = $this->urls[$hash];
-    		}
-
-    		if ($encode) {
-    			$this->urls[$hash] = $url = Description::template($url);
-    		}
-    		return $this->query_url_template = $url;
-    	}
-    	return false;
-    }
+        return $this->configFile;
+    }    
 
     public function json()
     {
-
-    	$data = $this->data();
+        $data = $this->data();
     	$lists = $this->lists();
     	$arr = [
     		$this->query_string,
@@ -89,7 +51,6 @@ class Suggestions
     		$this->lists['query_url'],
     	];
     	return $this->json = json_encode($arr);
-    	print_r($lists);
     }
 
     public function data($raw = null)
@@ -111,16 +72,15 @@ class Suggestions
     		$val = $value ? : $field;
     		$arr[$field] = _isset($row, $val, '');
             
-    	}
+    	}        
     	return $arr;
     }
 
     public function lists($data = null)
     {
-    	$query_url = $this->queryUrl(0);
-    	$query_url = $this->queryUrlTemplate($query_url, true);
-
     	$data = $data ? : $this->data;
+        $query_url = $this->queryUrl(0);
+    	$query_url = $this->queryUrlTemplate($query_url, true);    	
     	$arr = [
     		'complection' => [],
     		'description' => [],
@@ -139,5 +99,38 @@ class Suggestions
     		}
     	}
     	return $this->lists = $arr;
+    }
+
+    public function queryUrl($url = null)
+    {
+        if (null === $url) {
+            return $this->query_url;
+        } elseif ($url) {
+            $this->query_url = $url;
+        }
+        
+
+        if (!$this->query_url && $this->configFile) {
+            $config = include $this->configFile;
+            $this->query_url = get_config_var('query_url');
+        }
+        return $this->query_url;
+    }
+
+    public function queryUrlTemplate($url = null, $encode = null)
+    {
+        if (null === $url) {
+            return $this->query_url_template;
+        } elseif ($url) {           
+            if ($encode) {
+                $url = Description::template($url);
+            }
+            $hash = md5($url);
+            if (!isset($this->urls[$hash])) {
+                $this->urls[$hash] = $url;
+            }
+            return $this->query_url_template = $url;
+        }
+        return false;
     }
 }

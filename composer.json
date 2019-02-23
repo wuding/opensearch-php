@@ -16,6 +16,7 @@
     "files": ["src/functions.php"]
   },
   "require": {
-    "php": ">=5.4.0"
+    "php": ">=5.4.0",
+    "wuding/php-func": "^1.0.2"
   }
 }

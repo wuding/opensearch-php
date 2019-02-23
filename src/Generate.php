@@ -42,22 +42,30 @@ class Generate
             
         }
         $xml .= '</OpenSearchDescription>';
-        # print_r($this->osd);
         return $xml;
     }
 
-    public function xmlns($variable)
+    public function xmlns($variable, $prefix = ' ', $suffix = '')
     {
         $pieces = [''];
         foreach ($variable as $key => $value) {
             $k = trim($key);
             $v = trim($value);
-            # print_r([$k, $v]);
             if ($k && $v) {
                 $pieces[] = "xmlns:$k=\"$v\"";
             }
         }
-        return $attr = implode(PHP_EOL . '    ', $pieces);
+
+        $attr = implode(PHP_EOL . '    ', $pieces);
+        if ($attr) {
+            if ($prefix) {
+                $attr = $prefix . $attr;
+            }
+            if ($suffix) {
+                $attr .= $suffix;
+            }
+        }
+        return $attr;
     }
 
     public function singleTag($item, $variable)
