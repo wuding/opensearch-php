@@ -149,7 +149,11 @@ class Generate
         $types = array_shift($arr);
         $types = preg_split('/[,\s]+/', $types);
         $keys = array_keys($arr);
-        $len = count($arr);
+        $max = count($keys);
+        $len = count($args);
+        if ($len > $max) {
+            $len = $max;
+        }
         $params = $value = null;
         if ($args) {
             $value = $args[0];

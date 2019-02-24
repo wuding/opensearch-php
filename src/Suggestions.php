@@ -18,7 +18,9 @@ class Suggestions
     ];
     public $data = null;
     public $lists = null;    
-    public $json = null;    
+    public $json = null;
+    public $json_description = null;
+    public $json_query_url = null;
 
     public function __construct($raw_data = null, $query_string = null, $query_url = null)
     {
@@ -47,9 +49,13 @@ class Suggestions
     	$arr = [
     		$this->query_string,
     		$this->lists['complection'],
-    		$this->lists['description'],
-    		$this->lists['query_url'],
     	];
+        if ($this->json_description) {
+            $arr[] = $this->lists['description'];
+            if ($this->json_query_url) {
+                $arr[] = $this->lists['query_url'];
+            }
+        }
     	return $this->json = json_encode($arr);
     }
 
