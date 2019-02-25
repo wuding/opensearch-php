@@ -1,7 +1,7 @@
 {
   "name": "wuding/opensearch",
   "description": "OpenSearch for PHP",
-  "keywords": ["OpenSearch", "Search Engine"],
+  "keywords": ["OpenSearch", "Search Engine", "Search Suggestions"],
   "license": "BSD-3-Clause",
   "authors": [
     {
@@ -13,10 +13,10 @@
     "psr-4": {
       "OpenSearch\\": "src/"
     },
-    "files": ["src/functions.php"]
+    "files": ["src/OpenSearch.php"]
   },
   "require": {
     "php": ">=5.4.0",
-    "wuding/php-func": "^1.0.2"
+    "wuding/php-func": "^1.0.3"
   }
 }
