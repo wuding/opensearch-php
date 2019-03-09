@@ -119,7 +119,7 @@ class Generate
         $params = self::args(func_get_args(), __FUNCTION__);
         # print_r($params);exit;
         extract($params);
-        $href = $href ? : $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/opensearch';
+        $href = $href ? : request_scheme() . '://' . $_SERVER['HTTP_HOST'] . '/opensearch';
         # print_r($_SESSION);exit;
         $key = function () use (&$title, $href) {
             $title = trim($title);
